@@ -9,13 +9,10 @@ import io
 import csv
 
 # --- Safe loading of .env for local development ---
-# In production (like DigitalOcean), environment variables are set directly.
-# This avoids crashing the app if python-dotenv is not installed.
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    # This will be the case in production, which is fine.
     pass
 
 app = Flask(__name__)
@@ -203,3 +200,6 @@ def download_csv(csv_id):
     response.headers["Content-Disposition"] = "attachment; filename=weather_data.csv"
     response.headers["Content-Type"] = "text/csv"
     return response
+
+if __name__ == '__main__':
+    app.run(debug=True)
