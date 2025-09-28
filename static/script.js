@@ -30,8 +30,8 @@ document.getElementById('submit-btn').addEventListener('click', () => {
             summaryContainer.textContent = data.llm_summary;
             summaryContainer.style.display = 'block';
 
-            // Display raw JSON
-            resultElement.textContent = JSON.stringify(data.weather_data, null, 2);
+            // Display the API URL as the data source
+            resultElement.textContent = data.weather_data.url;
             
             // Render chart
             chartContainer.style.display = 'block';
