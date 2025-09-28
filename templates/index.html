@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Ask Wim</h1>
+        <textarea id="query-input" placeholder="e.g., When's the best time to go running in Utrecht tomorrow?"></textarea>
+        <button id="submit-btn">Submit</button>
+        <div id="summary-container"></div>
+        <div id="chart-container" style="display: none;">
+            <canvas id="weather-chart"></canvas>
+        </div>
+        <div id="result-container">
+            <details>
+                <summary>Raw Response</summary>
+                <pre id="result"></pre>
+            </details>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
