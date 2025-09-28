@@ -84,7 +84,6 @@ def normalize_to_csv(data):
     """Converts weather or climatology JSON data to a normalized CSV string."""
     if not data.get("features"):
         return ""
-    # This function assumes both APIs return a similar GeoJSON structure, which is a safe starting point.
     feature = data["features"][0]
     coords = feature["geometry"]["coordinates"]
     properties = feature["properties"]
@@ -137,7 +136,6 @@ def process_request():
 
         # Step 2: Parse parameters and fetch data based on the choice
         if api_choice == "climatology":
-            # Logic for Climatology API
             parsing_prompt = f"""
             Based on the user's query: '{user_query}', determine the location and date range.
             - Dates should be in MM-DD format.
@@ -146,7 +144,6 @@ def process_request():
             """
             model_name = "Climatology"
         else:
-            # Logic for Weather API (default)
             parsing_prompt = f"""
             Based on the user's query: '{user_query}' and today being {today.isoformat()}, determine the location and date range.
             - Dates should be in YYYY-MM-DDTHH:MM:SSZ format.
@@ -155,7 +152,6 @@ def process_request():
             """
             model_name = "Weather Forecast"
 
-        # Common parameter parsing call
         param_response = client.chat.completions.create(
             model="gpt-4o-mini",
             response_format={"type": "json_object"},
@@ -172,6 +168,7 @@ def process_request():
         summary_prompt = f"""
         You are a helpful weather assistant. A user asked: "{user_query}"
         Based on the following data from the {model_name} model, provide a concise, natural language answer.
+        If the data is climatology, explain that it represents long-term averages, not a specific forecast.
         Weather Data: {json.dumps(weather_data)}
         """
         summary_response = client.chat.completions.create(
@@ -200,6 +197,3 @@ def download_csv(csv_id):
     response.headers["Content-Disposition"] = "attachment; filename=weather_data.csv"
     response.headers["Content-Type"] = "text/csv"
     return response
-
-if __name__ == '__main__':
-    app.run(debug=True)
