@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify, make_response
-from dotenv import load_dotenv
 import os
 import requests
 import json
@@ -9,8 +8,15 @@ import uuid
 import io
 import csv
 
-# Load variables from .env file
-load_dotenv()
+# --- Safe loading of .env for local development ---
+# In production (like DigitalOcean), environment variables are set directly.
+# This avoids crashing the app if python-dotenv is not installed.
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # This will be the case in production, which is fine.
+    pass
 
 app = Flask(__name__)
 
