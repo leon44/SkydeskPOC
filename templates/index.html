@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Ask Wim</h1>
+        <h1>Ask a Meteorologist</h1>
         <textarea id="query-input" placeholder="e.g., When's the best time to go running in Utrecht tomorrow?"></textarea>
         <button id="submit-btn">Submit</button>
         <div id="summary-container"></div>
@@ -19,7 +19,10 @@
         <div id="result-container">
             <details>
                 <summary>Data sources</summary>
-                <pre id="result"></pre>
+                <pre id="result">
+                    <span id="api-url"></span>
+                    <a href="#" id="download-link" style="display: none; margin-left: 1rem;">Download raw data as CSV</a>
+                </pre>
             </details>
         </div>
     </div>

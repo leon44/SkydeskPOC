@@ -2,11 +2,17 @@ let weatherChart = null;
 
 document.getElementById('submit-btn').addEventListener('click', () => {
     const query = document.getElementById('query-input').value;
-    const resultElement = document.getElementById('result');
+    const apiUrlElement = document.getElementById('api-url');
+    const downloadLink = document.getElementById('download-link');
     const chartContainer = document.getElementById('chart-container');
     const summaryContainer = document.getElementById('summary-container');
+    const submitBtn = document.getElementById('submit-btn');
 
-    resultElement.textContent = 'Processing...';
+    // --- UI Loading State ---
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Please wait...';
+    apiUrlElement.textContent = 'Processing...';
+    downloadLink.style.display = 'none';
     chartContainer.style.display = 'none';
     summaryContainer.style.display = 'none';
 
@@ -24,14 +30,16 @@ document.getElementById('submit-btn').addEventListener('click', () => {
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            resultElement.textContent = `Error: ${data.error}`;
+            apiUrlElement.textContent = `Error: ${data.error}`;
         } else {
             // Populate summary
             summaryContainer.textContent = data.llm_summary;
             summaryContainer.style.display = 'block';
 
-            // Display the API URL as the data source
-            resultElement.textContent = data.weather_data.url;
+            // Display API URL and set up download link
+            apiUrlElement.textContent = data.weather_data.url;
+            downloadLink.href = `/download_csv/${data.csv_id}`;
+            downloadLink.style.display = 'inline';
             
             // Render chart
             chartContainer.style.display = 'block';
@@ -39,7 +47,12 @@ document.getElementById('submit-btn').addEventListener('click', () => {
         }
     })
     .catch(error => {
-        resultElement.textContent = `Error: ${error}`;
+        apiUrlElement.textContent = `Error: ${error}`;
+    })
+    .finally(() => {
+        // --- Restore UI State ---
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
     });
 });
 
