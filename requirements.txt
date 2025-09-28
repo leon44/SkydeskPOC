@@ -3,3 +3,4 @@ requests
 openai
 gunicorn
 python-dotenv
+uuid
