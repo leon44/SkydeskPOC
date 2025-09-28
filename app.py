@@ -8,7 +8,7 @@ from openai import OpenAI
 app = Flask(__name__)
 
 # --- API Key Configuration ---
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "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")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # --- Weather API Configuration ---
